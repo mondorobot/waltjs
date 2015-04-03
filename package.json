@@ -1,0 +1,35 @@
+{
+  "name": "WaltJS",
+  "version": "0.1.0",
+  "description": "CSS Animation Manager",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mondorobot/waltjs.git"
+  },
+  "keywords": [
+    "walt",
+    "waltjs",
+    "css",
+    "css3",
+    "animation",
+    "manager"
+  ],
+  "author": "Andy Mikulski",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/mondorobot/waltjs/issues"
+  },
+  "homepage": "https://github.com/mondorobot/waltjs",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-uglify": "^0.2.7",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-ts": "^1.11.13",
+    "grunt-tslint": "^0.4.4",
+    "tslint": "^0.4.14",
+    "typescript": "^1.5.0-alpha"
+  }
+}

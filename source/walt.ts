@@ -1,4 +1,6 @@
-export interface WaltOptions {
+/// <reference path="reference/jquery.d.ts"/>
+
+interface WaltOptions {
     el:any;
     animation:string;
     delay?:string;
@@ -12,7 +14,6 @@ export interface WaltOptions {
     fallback?:any;
     useTimeout?:boolean;
 }
-
 
 //----
 //
@@ -145,9 +146,8 @@ module WaltUtils {
 
 
 
-export module Walt {
-    var log:any = Logger.log,
-        Utils:any = WaltUtils,
+module Walt {
+    var Utils:any = WaltUtils,
         supportsCss:boolean = Utils.CSS.supportsAnimations(),
         $body:JQuery = $(document.body);
 
@@ -322,5 +322,4 @@ export module Walt {
     }
 
     listenForFocus();
-    log('Walt : Constructor');
 }
