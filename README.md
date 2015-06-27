@@ -9,34 +9,59 @@ Requires jQuery and caolan/async
 
 ### Usage
 
+First step is to create an animation composition. There are default animation options, but those can be overridden. 
+Here, we're defining a precomposed animation to `fadeIn` for `2500ms` (along with the remaining default settings).
+Calling `animate` triggers the animation to begin.
+
 ```
-// define a precomposed animation
-// note - no target is applied yet
-var intro = new Walt().name('fadeIn').duration(2500);
+var fadeInYourDiv = new Walt().target('#your-div').name('fadeIn').duration(2500);
 
-// you can 'fork' animations to create variations of existing compositions,
-// and use `.target` to set the element(s) to animate
-var intro2 = intro.fork().target(document.body);
+fadeInYourDiv.animate();
+```
 
-// apply an existing animation to multiple elements
-// each element gets its own animation instance so we can play with the delay etc
+Composing animations allows you to create one 'definition' and vary or apply as necessary to other elements.
+You can 'fork' animations to create variations of existing compositions, and use `target` to set the element(s) 
+
+```
+var superCoolFade = new Walt()
+  .name('yourAwesomeCSSAnimation')
+  .duration(250)
+  .timing('cubic-bezier(0.86, 0, 0.07, 1)');
+
+// we now have a composition definition, but no target
+// forking allows us to take the existing definition and alter it a little,
+// without messing with our main definition
+
+var evenCoolerFade = superCoolFade.fork().duration(2500);
+```
+
+Going even further, we can use this ^ forked comp as basis for _another_ animation.
+Say you want to stagger animations across a group of elements:
+
+```
 $('.stuff').each(function(i, v) {
-  intro.fork().target(v).delay(i * 50).animate();
+  // we fork and re-target/re-delay to create variation in our base anim composition
+  evenCoolerFade.fork().target(v).delay(i * 50).animate();
 });
+```
 
-// if we didn't want any per-instance property changes,
-// e.g. to animate a set of things at once,
-// we can just change the target to collect multiples
-//   (still forking as we want to extend an existing composition,
-//    if we didn't fork then we'd be altering the 'master' copy)
-intro.fork().target('.stuff').animate();
+Animating multiple elements, as in the example above? If you're using the same animation definition
+across all elements, you can simply target a collection:
+```
+evenCoolerFade.fork().target('.stuff').animate();
+```
+
+A huge benefit of Walt is managing callbacks and chaining animations.
+Using `before` and `after` (or `then` if you're into that), you can attach handlers to animation events.
 
 
-// chain animations via `then` / `after`
-intro.then(intro2.animate.bind(intro2)).animate();
+```
+yourAnimation.then(yourOtherAnimation.animate.bind(yourOtherAnimation)).animate();
+```
 
 
-// available commands:
+Total list of functions available:
+```
 new Walt()
   // animations have default settings, but can be overridden
   // in the following fashion:
@@ -67,4 +92,44 @@ new Walt()
   // and want a handler per-item
   .beforeEach(function($el, settings){ console.log('before each individual anim starts'); })
   .afterEach(function($el, settings){ console.log('after each individual anim ends'); })
+```
+
+
+### Easings
+
+Walt comes pre-packaged with the following easings, accessed via `Walt.prototype.easings`:
+
+```
+linear,
+ease,
+easeIn,
+easeOut,
+easeInOut,
+
+easeInQuad,
+easeInCubic,
+easeInQuart,
+easeInQuint,
+easeInSine,
+easeInExpo,
+easeInCirc,
+easeInBack,
+
+easeOutQuad,
+easeOutCubic,
+easeOutQuart,
+easeOutQuint,
+easeOutSine,
+easeOutExpo,
+easeOutCirc,
+easeOutBack,
+
+easeInOutQuad,
+easeInOutCubic,
+easeInOutQuart,
+easeInOutQuint,
+easeInOutSine,
+easeInOutExpo,
+easeInOutCirc,
+easeInOutBack
 ```
