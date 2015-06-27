@@ -6,6 +6,9 @@ JavaScript wrapper for CSS3 animation events. Allows for composing/forking anima
 ### Dependencies
 Requires jQuery and caolan/async
 
+
+### Usage
+
 ```
 // define a precomposed animation
 // note - no target is applied yet
