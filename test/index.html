@@ -42,10 +42,13 @@
               .target('#test1');
 
             // we can fork the base animation and alter that instance
+            // so we fork and have an animation with 250 duration and 1000 delay targeting #test1
+            // (and whatever the defaults are for the other options)
             superCoolFade
                 .fork()
                 .target('#test2')
-                .delay(0)
+                // we still ahve the 1000 delay here,
+                // but we can override other options
                 .duration(5000)
                 .animate();
 
