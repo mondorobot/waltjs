@@ -39,8 +39,7 @@
               .name('fadeInUp')
               .duration(250)
               .delay(1000)
-              .target('#test1')
-              .animate();
+              .target('#test1');
 
             // we can fork the base animation and alter that instance
             superCoolFade
@@ -64,6 +63,12 @@
             $('#test4').children().each(function(i,v){
                 superCoolFade.fork().name('fadeInUp').duration((i+1) * 2000).target(v).animate();
             });
+
+
+            // ..oh and animations only start when you want them to
+            superCoolFade.animate();
+            // keep in mind this only triggers our inital animation;
+            // forked instances need to be triggered separately
         </script>
     </body>
 </html>
