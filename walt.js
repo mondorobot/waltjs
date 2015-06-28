@@ -50,8 +50,12 @@
       'fork': function() {
         var anim = this;
 
-        // would like to find a non-jquery deep clone
-        return $.extend(true, Object.create(Walt), anim);
+        var newGuy = new Walt();
+        for (var prop in anim) {
+          newGuy[prop] = anim[prop];
+        }
+
+        return newGuy;
       },
 
 
@@ -247,7 +251,7 @@
         anim.animCount = 0;
         anim.animMax = anim.settings.element.length;
 
-        anim.settings.element.on('onanimationend animationend', anim._onAnimEndEvent.bind(anim));
+        anim.settings.element.on('animationend.walt', anim._onAnimEndEvent.bind(anim));
         anim.settings.element.css(anim._createCssObj(cssString));
       },
 
@@ -255,13 +259,17 @@
         var anim = this,
           $target = $(event.currentTarget);
 
+        $target.unbind('animationend.walt');
+        // reset the css by just passing in null values for the properties
+        $target.css(anim._createCssObj());
+
         anim.animCount += 1;
 
         // fire afterEach for each one
 
         async.parallel(anim.onAfterEaches, function() {
           // if we're done then we can fire the onAfters
-          if (anim.animCount >= anim.animMax) {
+          if (anim.animCount > anim.animMax) {
             anim._onAnimComplete();
           }
         });
@@ -273,6 +281,7 @@
         async.parallel(anim.onAfters, function() {
           delete anim.animCount;
           delete anim.animMax;
+
 
           // reset the css by just passing in null values for the properties
           anim.settings.element.css(anim._createCssObj());

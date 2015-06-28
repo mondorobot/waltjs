@@ -1,0 +1,68 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>WaltJS Test</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/animate.css">
+    </head>
+    <body>
+
+        <section class="main">
+            <div id="test1">This is one object</div>
+            <div id="test2">This is another object <div>this is nested</div></div>
+            <ul id="test3">
+                <li>These are children</li>
+                <li>These are children</li>
+                <li>These are children</li>
+                <li>These are children</li>
+            </ul>
+
+            <ul id="test4">
+                <li>This is a child</li>
+                <li>This is a child</li>
+                <li>This is a child</li>
+                <li>This is a child</li>
+            </ul>
+        </section>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
+        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="../bower_components/async/lib/async.js"></script>
+        <script src="../walt.js"></script>
+
+        <script>
+            var superCoolFade = new Walt()
+              .name('fadeInUp')
+              .duration(250)
+              .delay(1000)
+              .target('#test1')
+              .animate();
+
+            superCoolFade
+                .fork()
+                .target('#test2')
+                .delay(0)
+                .duration(5000)
+                .animate();
+
+            // superCoolFade
+            //     .fork()
+            //     .target('#test3')
+            //     .name('fadeInUp')
+            //     .children()
+            //     .duration(2500)
+            //     .animate();
+
+            $('#test4').children().each(function(i,v){
+                superCoolFade.fork().name('fadeInUp').duration((i+1) * 2000).target(v).animate();
+            });
+        </script>
+    </body>
+</html>
