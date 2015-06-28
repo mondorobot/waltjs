@@ -65,7 +65,7 @@ Calling `animate` triggers the animation to begin.
 
 
 Composing animations allows you to create one 'definition' and vary or apply as necessary to other elements.
-You can 'fork' animations to create variations of existing compositions, and use `target` to set the element(s) 
+You can `fork` animations to create variations of existing compositions, and use `target` to set the element(s) 
 
 ```
 var superCoolFade = new Walt()
