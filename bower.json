@@ -1,0 +1,28 @@
+{
+  "name": "WaltJS",
+  "version": "2.0.0",
+  "homepage": "https://github.com/mondorobot/waltjs",
+  "authors": [
+    "Andy Mikulski <andy@mondorobot.com>"
+  ],
+  "description": "Manager for composable CSS3 animations",
+  "main": "walt.js",
+  "keywords": [
+    "css3",
+    "animation",
+    "css",
+    "walt"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "async": "caolan/async#~1.2.1"
+  }
+}

@@ -2,3 +2,4 @@ node_modules
 .baseDir.js
 .tscache
 .DS_Store
+bower_components
