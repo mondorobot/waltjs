@@ -1,13 +1,55 @@
 # WaltJS
 ## Composable CSS3 Animation Manager
 
-JavaScript wrapper for CSS3 animation events. Allows for composing/forking animations on the fly. Combine with Animate.css for tons of fun!
+JavaScript wrapper for CSS3 animation events. Allows for composing/extending animations on the fly. Combine with Animate.css for tons of fun!
 
 ### Dependencies
 Requires jQuery and caolan/async
 
 
 ### Usage
+
+```
+var superCoolFade = new Walt()
+  .name('fadeInUp')
+  .duration(250)
+  .delay(1000)
+  .target('#test1');
+
+// we can fork the base animation and alter that instance
+// so we fork and have an animation with 250 duration and 1000 delay targeting #test1
+// (and whatever the defaults are for the other options)
+superCoolFade
+    .fork()
+    .target('#test2')
+    // we still ahve the 1000 delay here,
+    // but we can override other options
+    .duration(5000)
+    .animate();
+
+// targeting children but with the same animation definition
+superCoolFade
+    .fork()
+    .target('#test3')
+    .name('fadeInUp')
+    .children()
+    .duration(2500)
+    .animate();
+
+// currently to stagger child delays etc,
+// you have to loop via jquery or something
+$('#test4').children().each(function(i,v){
+    superCoolFade.fork().name('fadeInUp').duration((i+1) * 2000).target(v).animate();
+});
+
+
+// ..oh and animations only start when you want them to
+superCoolFade.animate();
+// keep in mind this only triggers our inital animation;
+// forked instances need to be triggered separately
+```
+
+### Usage Explained
 
 First step is to create an animation composition. There are default animation options, but those can be overridden. 
 Here, we're defining a precomposed animation to `fadeIn` for `2500ms` (along with the remaining default settings).
