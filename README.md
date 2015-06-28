@@ -4,7 +4,9 @@
 JavaScript wrapper for CSS3 animation events. Allows for composing/extending animations on the fly. Combine with Animate.css for tons of fun!
 
 ### Dependencies
-Requires jQuery and caolan/async
+Requires jQuery and caolan/async.
+
+Got bower? `bower install mondorobot/waltjs`
 
 
 ### Usage
