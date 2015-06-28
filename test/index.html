@@ -45,6 +45,7 @@
               .target('#test1')
               .animate();
 
+            // we can fork the base animation and alter that instance
             superCoolFade
                 .fork()
                 .target('#test2')
@@ -52,14 +53,17 @@
                 .duration(5000)
                 .animate();
 
-            // superCoolFade
-            //     .fork()
-            //     .target('#test3')
-            //     .name('fadeInUp')
-            //     .children()
-            //     .duration(2500)
-            //     .animate();
+            // targeting children but with the same animation definition
+            superCoolFade
+                .fork()
+                .target('#test3')
+                .name('fadeInUp')
+                .children()
+                .duration(2500)
+                .animate();
 
+            // currently to stagger child delays etc,
+            // you have to loop via jquery or something
             $('#test4').children().each(function(i,v){
                 superCoolFade.fork().name('fadeInUp').duration((i+1) * 2000).target(v).animate();
             });
