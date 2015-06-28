@@ -52,14 +52,15 @@ superCoolFade.animate();
 ### Usage Explained
 
 First step is to create an animation composition. There are default animation options, but those can be overridden. 
-Here, we're defining a precomposed animation to `fadeIn` for `2500ms` (along with the remaining default settings).
-Calling `animate` triggers the animation to begin.
 
 ```
 var fadeInYourDiv = new Walt().target('#your-div').name('fadeIn').duration(2500);
 
 fadeInYourDiv.animate();
 ```
+Here, we're defining a precomposed animation to `fadeIn` for `2500ms` (along with the remaining default settings).
+Calling `animate` triggers the animation to begin.
+
 
 Composing animations allows you to create one 'definition' and vary or apply as necessary to other elements.
 You can 'fork' animations to create variations of existing compositions, and use `target` to set the element(s) 
