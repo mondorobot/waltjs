@@ -90,11 +90,15 @@ $('.stuff').each(function(i, v) {
 });
 ```
 
+===
+
 Animating multiple elements, as in the example above? If you're using the same animation definition
 across all elements, you can simply target a collection:
 ```
 evenCoolerFade.fork().target('.stuff').animate();
 ```
+
+===
 
 A huge benefit of Walt is managing callbacks and chaining animations.
 Using `before` and `after` (or `then` if you're into that), you can attach handlers to animation events.
