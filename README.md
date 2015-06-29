@@ -178,3 +178,26 @@ easeInOutExpo,
 easeInOutCirc,
 easeInOutBack
 ```
+
+
+===
+
+
+### Legacy Walt (1.x) Support
+
+While singleton-style Walt is deprecated, Walt 2.0 supports the old style of animating:
+
+```
+Walt.animate({
+  'el': $('#yourelement'),
+  'animation': 'fadeInUp'
+});
+```
+
+is equivalent to
+
+```
+new Walt().target('#yourelement').name('fadeInUp').animate();
+```
+
+**Please note** this format does not currently support all of Walt 2.0's features, nor are there any current plans for supporting this format further in the future.
