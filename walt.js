@@ -1,5 +1,5 @@
 /*!
- * WaltJS
+ * WaltJS 2.0
  * @author Andy Mikulski <andy@mondorobot.com>
  */
 ;
@@ -87,7 +87,6 @@
 
 
 
-
       // 
       // 
       // 
@@ -95,7 +94,6 @@
       // 
       // 
       // 
-
 
 
 
@@ -146,7 +144,7 @@
       'name': function(name) {
         var anim = this;
 
-        anim.animation = name;
+        anim.settings.animation = name;
 
         return anim;
       },
@@ -161,7 +159,7 @@
       'fill': function(value) {
         var anim = this;
 
-        anim.fill = value;
+        anim.settings.fill = value;
 
         return anim;
       },
@@ -176,7 +174,7 @@
       'direction': function(value) {
         var anim = this;
 
-        anim.direction = value;
+        anim.settings.direction = value;
 
         return anim;
       },
@@ -191,7 +189,7 @@
       'timing': function(value) {
         var anim = this;
 
-        anim.timing = value;
+        anim.settings.timing = value;
 
         return anim;
       },
@@ -241,7 +239,6 @@
 
 
 
-
       // 
       // 
       // 
@@ -249,7 +246,6 @@
       // 
       // 
       // 
-
 
 
 
@@ -351,7 +347,6 @@
 
         return anim;
       },
-
 
 
 
@@ -563,11 +558,98 @@
         'easeInOutExpo': 'cubic-bezier(1.000, 0.000, 0.000, 1.000)',
         'easeInOutCirc': 'cubic-bezier(0.785, 0.135, 0.150, 0.860)',
         'easeInOutBack': 'cubic-bezier(0.680, -0.550, 0.265, 1.550)'
+      },
+
+
+
+      /**
+       * Function to apply settings to the animation based on a
+       * settings object passed into the function. Optionally,
+       * you may trigger an animate afterwards. 
+       * 
+       * @param  {Object} options      Key-value pairs of settings to apply to the animation.
+       * @param  {Boolean} thenAnimate After applying the settings, trigger the animation
+       * @param  {Boolean} shouldFork  Create a new animation, then apply these settings
+       * @return {Walt}                Animation with new settings
+       */
+      'settingsFromObject': function(options, thenAnimate, shouldFork) {
+        var anim = this;
+
+        // if they want a new animation
+        // WELL THEN THAT'S WHAT THEY'LL GET
+        if (shouldFork) {
+          anim = anim.fork();
+        }
+
+        // sneaky way to test for backward-compatibility
+        // if we don't have the function for the setting passed in,
+        // then walt 2.x doesn't support it, and it just ignores.
+        // (we have to check for onBefores and stuff though)
+        var property;
+        for (property in options) {
+          // doing null checks, so we should `var` these in-loop
+          var value, foundFunction;
+
+          // grab the requested value to set..
+          value = options[property];
+
+          // if the value exists..
+          if (options.hasOwnProperty(property) && typeof value !== 'undefined') {
+
+            // check if we need to update any old lingo with the new hotness
+            switch (property) {
+              case 'animation':
+                property = 'name';
+                break;
+              case 'el':
+                property = 'target';
+                break;
+              case 'onBefore':
+                property = 'before';
+                break;
+              case 'onComplete':
+                property = 'then';
+                break;
+            }
+
+            // try to grub a reference to the associated function on the animation
+            foundFunction = anim[property];
+
+            // if the property exists, and it's a function (so no altering 'private' anim properties)
+            if (foundFunction && typeof foundFunction === 'function') {
+              // then run it, applying that value to this anim
+              foundFunction.call(anim, value);
+            } else {
+              // else just print a warning
+              // should probably add a flag so this can be silenced
+              console && console.warn && console.warn('Walt : could not convert old setting ' + property);
+            }
+          }
+        }
+        // done setting settings!
+
+        // if we're to animate afterwards, do eet
+        if (thenAnimate) {
+          return anim.animate();
+        } else {
+          return anim;
+        }
       }
     };
 
     return Walt;
   })(window.Walt || {});
+
+  // Walt 1.x support
+  // mimics Walt as a singleton
+  // usage: `Walt.animate({'el': $('#yourdiv'), 'animation': 'fadeInUp'});`
+  window.Walt.animate = function(options) {
+    return new Walt().settingsFromObject(options, true);
+  };
+
+  // heck yeah mondo namespace
+  window.mondo = window.mondo || {};
+  window.mondo.Walt = window.Walt;
 
 
 })(window, document, jQuery, async);
