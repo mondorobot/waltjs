@@ -28,6 +28,10 @@
                 <li>This is a child</li>
                 <li>This is a child</li>
             </ul>
+
+            <div id="test5">Old and busted</div>
+            <div id="test6">New hotness</div>
+
         </section>
 
         <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -72,6 +76,26 @@
             superCoolFade.animate();
             // keep in mind this only triggers our inital animation;
             // forked instances need to be triggered separately
+
+
+            // now featuring Walt 1.x support!
+
+            // old n busted
+            Walt.animate({
+                'el': $('#test5'),
+                'animation': 'fadeInDown',
+                'duration': '500ms',
+                'delay': '250ms'
+            });
+
+            // newHotness
+            var newHotness = new Walt()
+                .target('#test6')
+                .name('fadeInDown')
+                .duration(500)
+                .delay(250)
+                .animate();
+
         </script>
     </body>
 </html>
