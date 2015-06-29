@@ -4,7 +4,7 @@
 JavaScript wrapper for CSS3 animation events. Allows for composing/extending animations on the fly. Combine with Animate.css for tons of fun!
 
 ### Dependencies
-Requires jQuery and caolan/async.
+Requires jQuery and [caolan/async](https://github.com/caolan/async).
 
 Got bower? `bower install mondorobot/waltjs`
 
@@ -23,8 +23,9 @@ var superCoolFade = new Walt()
 // (and whatever the defaults are for the other options)
 superCoolFade
     .fork()
+    // we're now working on a new Walt instance
     .target('#test2')
-    // we still ahve the 1000 delay here,
+    // we still have the 1000 delay here,
     // but we can override other options
     .duration(5000)
     .animate();
@@ -100,6 +101,8 @@ evenCoolerFade.fork().target('.stuff').animate();
 
 ===
 
+### Callbacks and chaining
+
 A huge benefit of Walt is managing callbacks and chaining animations.
 Using `before` and `after` (or `then` if you're into that), you can attach handlers to animation events.
 
@@ -109,12 +112,11 @@ yourAnimation.then(yourOtherAnimation.animate.bind(yourOtherAnimation)).animate(
 ```
 
 
-Total list of functions available:
+### List of Available Functions
+
+
 ```
 new Walt()
-  // animations have default settings, but can be overridden
-  // in the following fashion:
-
   .target(element) // element to run animation on
   .name('animationName') // name of the CSS animation to apply
   .duration(1000) // animation speed (in ms)
@@ -130,13 +132,14 @@ new Walt()
   .resume() // resumes/plays an animation
   .play() // resumes/plays an animation
 
-  // some functions are great for extending base compositions
-  .children() // select the current target's children
+  // animation creation helper functions
   .fork() // ** clone animation definition with current settings **
+  .children() // select the current target's children
 
   // you can also add before/after functions to fire before/after the animation
   .before(function($el, settings){ console.log('before anim starts'); })
   .after(function($el, settings){ console.log('after anim ends'); })
+
   // you can specify 'each' commands if you're animating a collection of elements
   // and want a handler per-item
   .beforeEach(function($el, settings){ console.log('before each individual anim starts'); })
@@ -146,7 +149,7 @@ new Walt()
 
 ### Easings
 
-Walt comes pre-packaged with the following easings, accessed via `Walt.prototype.easings`:
+Walt comes pre-packaged with [easings](http://easings.net), accessed via `Walt.prototype.easings`:
 
 ```
 linear,
@@ -155,32 +158,14 @@ easeIn,
 easeOut,
 easeInOut,
 
-easeInQuad,
-easeInCubic,
-easeInQuart,
-easeInQuint,
-easeInSine,
-easeInExpo,
-easeInCirc,
-easeInBack,
-
-easeOutQuad,
-easeOutCubic,
-easeOutQuart,
-easeOutQuint,
-easeOutSine,
-easeOutExpo,
-easeOutCirc,
-easeOutBack,
-
-easeInOutQuad,
-easeInOutCubic,
-easeInOutQuart,
-easeInOutQuint,
-easeInOutSine,
-easeInOutExpo,
-easeInOutCirc,
-easeInOutBack
+easeInQuad, easeOutQuad, easeInOutQuad,
+easeInCubic, easeOutCubic, easeInOutCubic,
+easeInQuart, easeOutQuart, easeInOutQuart,
+easeInQuint, easeOutQuint, easeInOutQuint,
+easeInSine, easeOutSine, easeInOutSine,
+easeInExpo, easeOutExpo, easeInOutExpo,
+easeInCirc, easeOutCirc, easeInOutCirc,
+easeInBack, easeOutBack, easeInOutBack
 ```
 
 
@@ -189,7 +174,7 @@ easeInOutBack
 
 ### Legacy Walt (1.x) Support
 
-While singleton-style Walt is deprecated, Walt 2.0 supports the old style of animating:
+While singleton-style Walt is deprecated, Walt 2.x supports the old style of animating:
 
 ```
 Walt.animate({
@@ -204,4 +189,4 @@ is equivalent to
 new Walt().target('#yourelement').name('fadeInUp').animate();
 ```
 
-**Please note** this format does not currently support all of Walt 2.0's features, nor are there any current plans for supporting this format further in the future.
+**Please note** the legacy-style format does not currently support all of Walt 2.x's features, nor are there any current plans for supporting this format further in the future.
